@@ -1,0 +1,108 @@
+
+.time {
+    font-weight: bold;
+}
+
+.key {
+    font-size: 26px;
+"
+}
+
+.legend {
+    position: relative;
+    bottom: 3px;
+    color: black;
+    font-size: 12px;
+}
+
+.client {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.agent {
+    font-weight: bold;
+    color: slategrey;
+}
+
+.controlUI {
+    background-color: #eeeeee;
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+    text-align: left;
+    color: darkslategray;
+    font-family: Droid sans mono, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.controlText {
+
+}
+
+/* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+#map {
+    height: 100%;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#floating-panel {
+    position: absolute;
+    top: 10px;
+    left: 25%;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+    text-align: left;
+    font-family: 'Roboto', 'sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+}
+
+#floating-panel {
+    margin-left: -52px;
+}
+
+#myBar {
+    width: 1%;
+    height: 12px;
+    background-color: grey;
+    position: absolute;
+    text-align: center;
+    line-height: 15px;
+    color: lightgrey;
+}
+
+#progressBar {
+    width: 25%;
+    position: absolute;
+    top: 60%;
+    left: 38%;
+    margin-right: -50%;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    height: 12px;
+    background-color: #EEE;
+
+}
+
+#loadImg {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    height: 75px;
+    width: 75px;
+}
