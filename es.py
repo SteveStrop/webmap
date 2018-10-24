@@ -1,3 +1,5 @@
+# TODO refactor all shaddows
+
 import datetime
 import re
 import configparser
@@ -108,7 +110,8 @@ class HSJob(EstateAgentJob):
         if not postcode:
             postcode = self.__get_postcode(address)
 
-        super().__init__(client, href, ref_num, floorplan, photos, contact, phone_primary, phone_secondary, phone_other,
+        super().__init__(client, '', href, ref_num, floorplan, photos, contact, phone_primary, phone_secondary,
+                         phone_other,
                          email,
                          address, postcode, appointment
                          )
@@ -171,6 +174,10 @@ class Scraper:
         self.agent = config[agent]
         self.chrome_driver_path = config['PATH']['DRIVER_PATH']
         self.wb_path = config['PATH']['EXCEL_PATH']
+        # get the workbook
+        self.wb = load_workbook(filename=self.wb_path, read_only=True)
+        # get the first sheet in the workbook
+        self.ws = self.wb[self.wb.sheetnames[0]]
         if self.mode == 'headless':
             self.chrome_options = Options()
             self.chrome_options.add_argument("--headless")
@@ -226,9 +233,9 @@ class Scraper:
     def get_outlook_jobs(self):
 
         def _agent(i):
-            agent = self.ws.cell(i + 5, 1).value
+            agent_cell_value = self.ws.cell(i + 5, 1).value
             regex = r'(?:AGENT.*?)([A-Z].*?)(?:([A-Z]{1,2}[\dR][\dA-Z]? [\d][A-Z]{2}))'
-            match = re.search(regex, agent)
+            match = re.search(regex, agent_cell_value)
             if match:
                 return match.group(1).strip()
             return ''
@@ -240,13 +247,22 @@ class Scraper:
                 return match[0].strip()
             return ''
 
-        def _address(i):
-            address = self.ws.cell(i + 2, 1).value.strip()
+        def _address(i):  # TODO deal with missing postcodes
+            """Parse the contents of spreadsheet cell containing address and postcode data
+            :param i: integer used to reference spreadsheet cell
+            :returns address: the full address less the postcode or '' if parsing fails
+            :returns postcode: the postcode part of the address or '' if parsing fails"""
+
+            try:
+                address = self.ws.cell(i + 2, 1).value.strip()
+            except AttributeError:
+                return '', ''
             postcode = _postcode(address)
             address = address.replace(postcode, '').strip().strip(',')
             return address, postcode
 
         def _appointment(i):
+            """"""
             appointment = self.ws.cell(i + 3, 1).value
             if appointment:
                 appointment = appointment[3:].replace('/', '-').strip()
@@ -256,19 +272,17 @@ class Scraper:
             return self.ws.cell(i + 4, 1).value.strip('*').strip()
 
         def _ref_num(i):
-            ref_num = self.ws.cell(i + 5, 1).value
+            ref_num_cell_value = self.ws.cell(i + 5, 1).value
             regex = r'^\d{10}'
-            match = re.search(regex, ref_num)
+            match = re.search(regex, ref_num_cell_value)
             if match:
                 return match.group(0).strip()
             return ''
 
         # try:
-        wb = load_workbook(filename=self.wb_path, read_only=True)
-        # get the first sheet in the workbook
-        self.ws = wb[wb.sheetnames[0]]
-        #
+
         row_count = float(self.ws.calculate_dimension().split('A').pop())  # get the last element in the list
+        # data in spreadsheet should be in five row group. Any remainder means corrupted data
         if row_count % 5:
             raise Exception  # TODO implement this properly 'Non integer number of outlook appointments. Re run
             # agent map'#
@@ -290,11 +304,12 @@ class Scraper:
                     ref_num=ref_num
                 )
 
-                jobs_list.append(job)
+                if postcode:
+                    jobs_list.append(job)
         # # except:
         # pass
         # finally:
-        wb.close()
+        self.wb.close()
         return jobs_list
 
     def get_ka_jobs(self):  # TODO move these into Scraper

@@ -35,17 +35,110 @@ google.maps.InfoWindowZ = function (opts) {
 
 // start inject
 const POSTCODES = [
-
+  { 'postcode': 'MK13 7LL' },
+  { 'postcode': 'MK5 6FY' },
+  { 'postcode': 'MK4 4GY' },
+  { 'postcode': 'MK2 3NF' },
+  { 'postcode': 'MK9 3AR' },
+  { 'postcode': 'MK13 7LT' },
+  { 'postcode': 'MK18 1BN' },
+  { 'postcode': 'MK7 8PJ' },
+  { 'postcode': 'MK5 7DH' },
+  { 'postcode': 'MK19 6EQ' }
 ]
 const DAY_COLORS = [
-
+  '  #e6194b',
+'  #0082c8',
+'  #f58231',
+'  #911eb4',
+'  #3cb44b',
+'  #3cb44b',
+'  #aa6e28',
+'  #808080',
+'  #808080',
+'  #808080'
 ]
 const BUBBLE_CONTENTS = [
+  `<div class = "client">Key Agent</div>
+  <div class = "address">162 Arncliffe Drive Heelands Milton Keynes</div>
+  <div class = "agent"> Connells</div>
+  <div class = "time" > @ </div>`,
+  `<div class = "client">House Simple</div>
+  <div class = "address">16 Borough Bridge</div>
+  <div class = "agent"> </div>
+  <div class = "time" >Wed Oct 24 @ 13:00</div>`,
+  `<div class = "client">Key Agent</div>
+  <div class = "address">11 Lorre Mews Oxley Park</div>
+  <div class = "agent"> </div>
+  <div class = "time" >Thu Oct 25 @ 09:00</div>`,
+  `<div class = "client">Key Agent</div>
+  <div class = "address">174 Hunter Drive Bletchley Milton Keynes</div>
+  <div class = "agent"> Connells – Bletchley</div>
+  <div class = "time" >Fri Oct 26 @ 10:00</div>`,
+  `<div class = "client">Key Agent</div>
+  <div class = "address">627a Silbury Boulevard  Milton Keynes Buckinghamshire</div>
+  <div class = "agent"> Connells – Milton Keynes</div>
+  <div class = "time" >Mon Oct 29 @ 15:00</div>`,
+  `<div class = "client">Key Agent</div>
+  <div class = "address">27 Smithergill Court Heelands Milton Keynes Buckinghamshire</div>
+  <div class = "agent"> Connells – Milton Keynes</div>
+  <div class = "time" >Mon Oct 29 @ 16:00</div>`,
+  `<div class = "client">Key Agent</div>
+  <div class = "address">20 Meadway Buckingham</div>
+  <div class = "agent"> Leaders Lettings</div>
+  <div class = "time" >Thu Nov 01 @ 00:00</div>`,
+  `<div class = "client">Key Agent</div>
+  <div class = "address">10 Taverner Close Old Farm Park Milton Keynes NA</div>
+  <div class = "agent"> Wilson Peacock</div>
+  <div class = "time" >Fri Nov 30 @ 01:52</div>`,
+  `<div class = "client">Key Agent</div>
+  <div class = "address">7 Hollister Chase Milton Keynes</div>
+  <div class = "agent"> Connells</div>
+  <div class = "time" >Wed Jan 16 @ 01:00</div>`,
+  `<div class = "client">Key Agent</div>
+  <div class = "address">30 Lower Weald Calverton Milton Keynes</div>
+  <div class = "agent"> Connells</div>
+  <div class = "time" >Fri Feb 08 @ 00:00</div>`
 ]
 const LEGEND_TEXT = [
-
+  `<div>
+  <span class = "key" style="color:#e6194b">●</span>
+  <span class = "legend">TBA</span>
+  </div>
+  <div>
+  <span class = "key" style="color:#0082c8">●</span>
+  <span class = "legend">Wed Oct 24</span>
+  </div>
+  <div>
+  <span class = "key" style="color:#f58231">●</span>
+  <span class = "legend">Thu Oct 25</span>
+  </div>
+  <div>
+  <span class = "key" style="color:#911eb4">●</span>
+  <span class = "legend">Fri Oct 26</span>
+  </div>
+  <div>
+  <span class = "key" style="color:#3cb44b">●</span>
+  <span class = "legend">Mon Oct 29</span>
+  </div>
+  <div>
+  <span class = "key" style="color:#aa6e28">●</span>
+  <span class = "legend">Thu Nov 01</span>
+  </div>
+  <div>
+  <span class = "key" style="color:#808080">●</span>
+  <span class = "legend">2wks+</span>
+  </div>`
 ]
 // end inject
+
+
+
+
+
+
+
+
 
 const DOM = {
   map: document.getElementById('map'),
